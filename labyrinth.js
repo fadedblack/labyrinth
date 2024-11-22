@@ -3,16 +3,25 @@ const p2Name = '😎';
 const p3Name = '😴';
 const p4Name = '😳';
 
+
+function repeat(char, times) {
+  if (times < 1) {
+    return '';
+  }
+  
+  return char + repeat(char, times - 1);
+}
+
 function getHeading() {
-  return '┏━━━━┳━━━━┳━━━━┳━━━━┳━━━━┳━━━━┳━━━━┳━━━━┳━━━━┳━━━━┓';
+  return '┏' + repeat('━', 4) + repeat('┳━━━━', 9)+ '┓';
 }
 
 function getFooting() {
-  return '┗━━━━┻━━━━┻━━━━┻━━━━┻━━━━┻━━━━┻━━━━┻━━━━┻━━━━┻━━━━┛';
+  return '┗' + repeat('━', 4) + repeat('┻━━━━', 9) + '┛';
 }
 
 function getRowFooting() {
-  return '┣━━━━╋━━━━╋━━━━╋━━━━╋━━━━╋━━━━╋━━━━╋━━━━╋━━━━╋━━━━┫';
+  return '┣━━━━' + repeat('╋━━━━', 9) + '┫';
 }
 
 function getCharsInCell(p1Pos,cellNumber, bombBoxNumber) {
