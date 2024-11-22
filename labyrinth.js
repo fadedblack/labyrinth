@@ -172,6 +172,27 @@ function getNextPosition(currentPosition) {
   }
 }
 
+function wait(time) {
+  for (let i = 0; i < time; i += 1) {
+  } 
+  console.clear();
+}
+
+function loadingScreen(string) {
+  let message = string;
+  for (let dots = 0; dots < 6; dots += 1) {
+    wait(1000000000);
+    message += '.';
+    console.log('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n');
+    console.log(message);
+  }
+}
+
+function loadScreen() {
+  console.log('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n');
+  console.log(loadingScreen('\t\t\t\t\t\t\t\tLOADING LABYRINTH'));
+}
+
 function startGame() {
   const bombPositions = generateBombs();
   // console.log(bombPositions);
@@ -179,6 +200,8 @@ function startGame() {
   const endPosition = getEndPosition();
   // console.log(endPosition);
 
+  loadScreen();
+  console.clear();
   let startPosition = 0;
   console.log(createGrids());
 
