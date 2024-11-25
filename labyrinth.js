@@ -180,13 +180,13 @@ function startGame() {
     }
     console.clear();
 
-    // if (isBombEncountered(startPosition, bombPositions)) {
-    //   console.log(createGrids('', startPosition));
-    //   console.log("Ohh..You encountered a Bomb💥💥..");
-    //   startPosition = 0;
+    if (isBombEncountered(startPosition, bombPositions)) {
+      console.log(createGrids('', startPosition));
+      console.log("Ohh..You encountered a Bomb💥💥..");
+      startPosition = 0;
 
-    //   continue;
-    // }
+      continue;
+    }
 
     console.log(createGrids(startPosition));
     console.log("a : ⬅️   w : ⬆️   d : ➡️  s : ⬇️");
