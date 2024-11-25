@@ -176,6 +176,27 @@ function isValidPosition(position, destination) {
   return !(position > 100 && position !== destination);
 }
 
+function getUpdatedGrid(emoji, position, message) {
+  console.log(createGrids(emoji, position));
+  console.log(createMessageBox(message));
+}
+
+function getPosition(position, destination) {
+  let startPosition = getNextPosition(position);
+
+  while (!isValidPosition(startPosition, destination)) {
+    console.log("Invalid destination");
+    
+    if (startPosition === 101) {
+      startPosition = getNextPosition(startPosition - 1);
+      continue;
+    }
+    startPosition = getNextPosition(startPosition - 10);
+  }
+
+  return startPosition;
+}
+
 function startGame() {
   const bombPositions = generateBombs();
   const endPosition = getEndPosition();
@@ -190,31 +211,20 @@ function startGame() {
     console.clear();
 
     if (isBombEncountered(startPosition, bombPositions)) {
-      console.log(createGrids('💥', startPosition));
-      console.log("Ohh..You encountered a Bomb💥💥..");
+      getUpdatedGrid('💥', startPosition, "Ohh..You encountered a Bomb💥💥..");
       startPosition = 0;
 
       continue;
     }
 
-    console.log(createGrids(p1Name, startPosition));
-    console.log("a : ⬅️   w : ⬆️   d : ➡️  s : ⬇️");
+    getUpdatedGrid(p1Name, startPosition, "a: 👈   w: 👆   d: 👉   s: 👇");
 
-    startPosition = getNextPosition(startPosition);
+    // startPosition = getNextPosition(startPosition);
+    startPosition = getPosition(startPosition, endPosition);
 
-    while (!isValidPosition(startPosition, endPosition)) {
-      console.log("Invalid destination");
-      if (startPosition === 101) {
-        startPosition = getNextPosition(startPosition - 1);
-      }
-      else {
-        startPosition = getNextPosition(startPosition - 10);
-      }
-    }
   }
   console.clear();
-  console.log(createGrids('🎉',startPosition - 10));
-  console.log("Congrats..🎉..You found the destination🤩🥳");
+  getUpdatedGrid('🎉', startPosition - 10, "Congrats..🎉..You found the destination🤩🥳");
 }
 
 startGame();
