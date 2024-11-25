@@ -23,36 +23,29 @@ function getRowFooting() {
   return '┣━━━━' + repeat('╋━━━━', 9) + '┫';
 }
 
-function getCharsInCell(p1Pos, cellNumber, bombBoxNumber, winBoxNumber) {
-  if (cellNumber === winBoxNumber) {
-    return ' ' + '🎉' + ' ┃';
+function getCharsInCell(cellContext, cellNumber, boxNumber) {
+  if (cellNumber === boxNumber) {
+    return ' ' + cellContext + ' ┃';
   }
 
-  if (cellNumber === bombBoxNumber) {
-    return ' ' + '💥' + ' ┃';
-  }
-
-  if (p1Pos === cellNumber) {
-    return ' ' + p1Name + ' ┃';
-  }
   return ' ⬜ ┃';
 }
 
-function createRow(p1Pos, rowStartNumber, bombBoxNumber, winBox) {
+function createRow(cellContext, cellNumber, rowStartNumber) {
   let rowString = '';
 
   for (let boxNumber = rowStartNumber; boxNumber > rowStartNumber - 10; boxNumber--) {
-    rowString += getCharsInCell(p1Pos, boxNumber, bombBoxNumber, winBox);
+    rowString += getCharsInCell(cellContext, cellNumber, boxNumber);
   }
 
   return '┃' + rowString;
 }
 
-function createGrids(p1Pos, bombBox, winBox) {
+function createGrids(cellContext, cellNumber) {
   let grid = getHeading() + '\n';
 
   for (let noOfRows = 10; noOfRows > 0; noOfRows--) {
-    grid += createRow(p1Pos, noOfRows * 10, bombBox, winBox) + '\n';
+    grid += createRow(cellContext, cellNumber, noOfRows * 10) + '\n';
 
     if (noOfRows !== 1) {
       grid += getRowFooting() + '\n';
@@ -62,7 +55,7 @@ function createGrids(p1Pos, bombBox, winBox) {
   return grid + getFooting();
 }
 
-function getRandomNoInRange(to, from) { // 90, 100
+function getRandomNoInRange(to, from) {
   return from + Math.ceil(Math.random() * (to - from));
 }
 
@@ -92,6 +85,7 @@ function generateBombs() {
 
   while (totalNoOfBobms > 0) {
     bombPosition += getBombPosition() + ' ';
+
     if (isCorrectBombPosition(bombPosition)) {
       totalNoOfBobms -= 1;
     }
@@ -108,6 +102,21 @@ function getEndPosition() {
   return getRandomNoInRange(100, 110);
 }
 
+function getALine(length) {
+  let line = '';
+
+  for (let iterator = 0; iterator < length; iterator += 1) {
+    line += '━';
+  }
+
+  return line;
+}
+
+function createMessageBox(message) {
+  const box = '┏' + getALine(message.length) + '┓\n┃' + message + '┃\n┗';
+  return box + getALine(message.length) + '┛';
+}
+
 function getStartPosition() {
   const position = +prompt("Enter your starting position(1-10): ", "01");
 
@@ -115,23 +124,23 @@ function getStartPosition() {
     return position;
   }
 
-  console.log("Starting position can only be between 1 and 10..🙄");
-  console.log("Enter a valid position..!");
+  console.log(createMessageBox("Starting position can be between 1 and 10 🙄"));
+  console.log(createMessageBox("Please Enter a valid position...!"));
 
   return getStartPosition();
 }
 
 function isBombEncountered(position, bombPositions) {
-  let currentBombPos = '';
+  let bombPosition = '';
 
   for (let index = 0; index < bombPositions.length; index++) {
-    currentBombPos += bombPositions[index];
+    bombPosition += bombPositions[index];
 
     if (bombPositions[index] === ' ') {
-      if (+currentBombPos === position) {
+      if (+bombPosition === position) {
         return true;
       }
-      currentBombPos = '';
+      bombPosition = '';
     }
 
   }
@@ -181,14 +190,14 @@ function startGame() {
     console.clear();
 
     if (isBombEncountered(startPosition, bombPositions)) {
-      console.log(createGrids('', startPosition));
+      console.log(createGrids('💥', startPosition));
       console.log("Ohh..You encountered a Bomb💥💥..");
       startPosition = 0;
 
       continue;
     }
 
-    console.log(createGrids(startPosition));
+    console.log(createGrids(p1Name, startPosition));
     console.log("a : ⬅️   w : ⬆️   d : ➡️  s : ⬇️");
 
     startPosition = getNextPosition(startPosition);
@@ -204,7 +213,7 @@ function startGame() {
     }
   }
   console.clear();
-  console.log(createGrids('', '', startPosition - 10));
+  console.log(createGrids('🎉',startPosition - 10));
   console.log("Congrats..🎉..You found the destination🤩🥳");
 }
 
