@@ -53,22 +53,6 @@ function getBombPosition() {
   return Math.ceil(Math.random() * 100);
 }
 
-// function isCorrectBombPosition(bombPosition) {
-
-//   let correctPosition = bombPosition - 11 !== '🧨';
-//   correctPosition = correctPosition && bombPosition - 10 !== '🧨';
-//   correctPosition = correctPosition && bombPosition - 9 !== '🧨';
-
-//   correctPosition = correctPosition && bombPosition - 1 !== '🧨';
-//   correctPosition = correctPosition && bombPosition + 1 !== '🧨';
-
-//   correctPosition = correctPosition && bombPosition + 9 !== '🧨';
-//   correctPosition = correctPosition && bombPosition + 10 !== '🧨';
-//   correctPosition = correctPosition && bombPosition + 11 !== '🧨';
-
-//   return correctPosition;
-// }
-
 function generateBombs() {
   let totalNoOfBombs = 20;
   const bombPosition = [];
@@ -76,10 +60,7 @@ function generateBombs() {
   while (totalNoOfBombs > 0) {
     const index = 20 - totalNoOfBombs;
     bombPosition[index] = getBombPosition();
-
-    if (isCorrectBombPosition(bombPosition[index])) {
-      totalNoOfBombs -= 1;
-    }
+    totalNoOfBombs -= 1;
   }
 
   return bombPosition;
@@ -114,7 +95,7 @@ function getStartPosition() {
 function isBombEncountered(position, bombPositions) { // can be made into a function which checks whether an element is present in array or not
   for (let index = 0; index < bombPositions.length; index++) {
     if (bombPositions[index] === position) {
-        return true;
+      return true;
     }
   }
 
