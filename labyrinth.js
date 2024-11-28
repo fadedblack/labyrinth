@@ -53,21 +53,21 @@ function getBombPosition() {
   return Math.ceil(Math.random() * 100);
 }
 
-function isCorrectBombPosition(bombPosition) {
+// function isCorrectBombPosition(bombPosition) {
 
-  let correctPosition = bombPosition - 11 !== '🧨';
-  correctPosition = correctPosition && bombPosition - 10 !== '🧨';
-  correctPosition = correctPosition && bombPosition - 9 !== '🧨';
+//   let correctPosition = bombPosition - 11 !== '🧨';
+//   correctPosition = correctPosition && bombPosition - 10 !== '🧨';
+//   correctPosition = correctPosition && bombPosition - 9 !== '🧨';
 
-  correctPosition = correctPosition && bombPosition - 1 !== '🧨';
-  correctPosition = correctPosition && bombPosition + 1 !== '🧨';
+//   correctPosition = correctPosition && bombPosition - 1 !== '🧨';
+//   correctPosition = correctPosition && bombPosition + 1 !== '🧨';
 
-  correctPosition = correctPosition && bombPosition + 9 !== '🧨';
-  correctPosition = correctPosition && bombPosition + 10 !== '🧨';
-  correctPosition = correctPosition && bombPosition + 11 !== '🧨';
+//   correctPosition = correctPosition && bombPosition + 9 !== '🧨';
+//   correctPosition = correctPosition && bombPosition + 10 !== '🧨';
+//   correctPosition = correctPosition && bombPosition + 11 !== '🧨';
 
-  return correctPosition;
-}
+//   return correctPosition;
+// }
 
 function generateBombs() {
   let totalNoOfBombs = 20;
